@@ -7,15 +7,13 @@
 TIME=$(date +%H:%M)
 DATE=$(date +%b-%d)
 
-echo "------ SYD'S DIRECTORY BUILDER ------"
-echo "------ VERSION ID *0.2.5* OSX  ------"
-echo "------  Today is $DATE $TIME   ------"
+echo "----- DIRECTORY BUILDER ------"
+echo "---- VERSION ID *0.2.5* OSX ------"
+echo "----- Today is $DATE $TIME ------"
 echo "*"
 echo "*"
-
-echo "Hi Syd, Have a good day!"
 echo "------------------------"
-cd /Users/Sydney/Dropbox/Projects/
+cd /Users/$USER/Dropbox/Projects/
 read -p "Name Project: " FOLDER
 sleep 1
 mkdir $FOLDER
