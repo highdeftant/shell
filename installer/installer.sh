@@ -21,10 +21,10 @@ function locatepointer() {
 }
 
 
-DEBFILES=/media/gh0st/BACKUP/BKUP/debfiles/*.deb
+DEBFILES=/media/$USER/BACKUPDRIVE/FOLDER/debfiles/*.deb
 GWEINSTALLER='./Labs/scripts/gweinstaller.sh'
 
-for files in $(cat ~/Labs/scripts/packages.txt)
+for files in $(cat ~/Documents/packages/installfiles.txt)
 do
 	sudo apt install $files -y
 done
@@ -37,31 +37,10 @@ GwE
 kismet
 locatepointer
 
-sh Downloads/pia*
-piactl login pia.txt
 
 
 sudo dpkg -i $DEBFILES -y
 $GWEINSTALLER
 
-# For Ledger USB connection
-wget -q -O - https://raw.githubusercontent.com/LedgerHQ/udev-rules/master/add_udev_rules.sh | sudo bash
 
-
-
-
-
-echo "--------------"
-echo """List of .deb pkg's:
-
-Dropbox - https://www.dropbox.com/install-linux
-
-Packet Tracer - https://www.netacad.com/portal/resources/packet-tracer
-
-Discord - https://discord.com/download
-
-PIA - https://www.privateinternetaccess.com/installer/x/download_installer_linux
-
-Ledger - https://www.ledger.com/ledger-live/download
-"""
 exit
