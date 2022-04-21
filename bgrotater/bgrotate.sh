@@ -5,7 +5,7 @@
 
 TIME=$(date +%H:%M)
 DATE=$(date +%a-%b-%d)
-WALLPAPER_DIR=~/Pictures/Wallpapers
+WALLPAPER_DIR=/home/$USER/Pictures/Wallpapers
 IMAGE=$(ls $WALLPAPER_DIR | shuf -n 1)
 
 echo $DATE
