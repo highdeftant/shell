@@ -28,3 +28,13 @@ A compilation of bash scripts I've worked on over the years, some are still usef
 **BGRotater**:
 	- Changes the background on your PC via terminal using a folder full of pictures vs GUI
 	- Its randomized so it always gives you a surprise background different from the last (may repeat bg at times).
+
+**For**:
+    - This just counts to 10, lol. Arithmatic in bash is funny though.
+
+**Argcnt**:
+    - You can just feed this thing arguments and it'll keep count and print them out, useful!
+
+**Save**:
+    - Man, I was using this to download my purchased books from humble bundle in bulk but some edit to their code leaves this one broken. :[
+    - R.I.P
