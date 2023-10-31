@@ -4,53 +4,30 @@
 
 DATE=$(date +%b-%d-%y)
 TIME=$(date +%H:%M:%S)
-EXTDR="/dev/sdd1"
-CRONLOGS="$USER/Documents/cronlogs/"
+EXTDR=/dev/sdd1
+BACKUPDR=/mnt/media/$USER/backupdr/arch_backup/
+CRONLOGS=$USER/Documents/cronlogs/
+UUID='63ACC6CE2E1BC18D'
+
+function backupos() {
+	sudo rm -vr ~/.cache/mozilla ~/.cache/brave*/
+	notify-send "Backup Starting"
+	echo $DATE "@" $TIME
+	echo "Initiating Backup...."
+	sudo rsync -av --delete $HOME $BACKUPDR 
+	echo "Backup Completed at $TIME"
+	notify-send "Backup Completed at $TIME"
+}
 
 # Searches to see if directory is made, if not, create it
 # After directory creation, mount the drive
+
 function findHDD() {
-
-	if [ ! -d $BACKUPDR ]; then
-		echo "Backup Drive not located... Creating directory..."
-		mkdir -p $BACKUPDR
+	if lsblk -f | grep -q $UUID; then
+		echo 'Device mounted, ready for backup....'
+		backupos
 	else
-		if grep -qs "$EXTDR" /proc/mounts; then
-			echo "Device is already mounted"
-		fi
-	fi
-
-	if sudo mount $EXT $BACKUPDR; then
-		echo "Backup Drive has been mounted"
-	else
-		echo "Mounting Failed! Errors sent to log file"
-		echo >>&2 $CRONLOGS/backuperr.log
-		notify-send "Mounting Failed! Errors sent to log file"
-	fi
-}
-
-#
-function backupos() {
-	sudo rm -vr .cache/mozilla/ .cache/brave*/
-	
-	if [ -d $BACKUPDR ]; then
-		notify-send "OS Backup Starting"
-		echo $DATE "@" $TIME
-		echo "Initiating Backup...."
-		sudo rsync -av --delete $HOME $BACKUPDR >> $CRONLOGS/backup.log
-		echo "Backup Completed at $TIME"
-	elif [ ! -d $BACKUPDR ]; then
-		echo "Drive not detected. Can't perform backup!"
-		echo >>&2 $CRONLOGS/backuperr.log
-	fi
-
-
-}
-
-function restoreos() {
-	if [-d $BACKUPDR]; then
-		echo "Starting Restoration..."
-		sudo rsync -av $BACKUPDR $HOME
+		echo 'Device not found'
 	fi
 }
 
@@ -70,6 +47,6 @@ function updateOS() {
 }
 
 findHDD
-backupos
+
 
 exit
