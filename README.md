@@ -1,8 +1,7 @@
 # Bash Scripts
 
-A compilation of bash scripts I've worked on over the years, some are still useful, A Description of each script is below
-
-> Warning! A lot of these programs are deprecated. Use at own risk.
+This is a mixture of scripts I've written - some for Debian, some for Arch
+> Warning! A lot of these programs are possibly deprecated. Use at own risk.
 
 **backupOS**:
     - Uses rsync to make a mirror image of $USER folder, this copies only the differences and will delete anything that gets deleted, keeping everything
@@ -11,11 +10,6 @@ A compilation of bash scripts I've worked on over the years, some are still usef
 
 **VPNSW** :
     - Switches between London and Washington, DC locations using the PIA CLI
-
-****
-
-**fldrmkr**:
-    - A terminal based application I built to assist a friend with creating new folders their web development projects
 
 ****
 
@@ -28,13 +22,7 @@ A compilation of bash scripts I've worked on over the years, some are still usef
 **BGRotater**:
 	- Changes the background on your PC via terminal using a folder full of pictures vs GUI
 	- Its randomized so it always gives you a surprise background different from the last (may repeat bg at times).
-
-**For**:
-    - This just counts to 10, lol. Arithmatic in bash is funny though.
+****
 
 **Argcnt**:
     - You can just feed this thing arguments and it'll keep count and print them out, useful!
-
-**Save**:
-    - Man, I was using this to download my purchased books from humble bundle in bulk but some edit to their code leaves this one broken. :[
-    - R.I.P
