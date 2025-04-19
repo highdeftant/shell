@@ -16,13 +16,13 @@ LOCKED_ACC=0
 ERR=0
 
 # Get accounts with Wheel access
-get_wheel() {
-	local IFS=","
-	WHEEL_ACC=($(sudo awk -F: '/wheel/' {print $4}))
-	for acc in ${!WHEEL_ACC[@]}; do
-		echo $WHEEL_ACC | cut -d "," -f $acc
-		if [[ $acc  ]]
-}
+#get_wheel() {
+#	local IFS=","
+#	WHEEL_ACC=($(sudo awk -F: '/wheel/' {print $4}))
+#	for acc in ${!WHEEL_ACC[@]}; do
+#		echo $WHEEL_ACC | cut -d "," -f $acc
+#		if [[ $acc  ]]
+#}
 
 audit_users() {
 
