@@ -20,13 +20,11 @@ move_files() {
 	mkdir -p $DEST
 
 	if mv "$SOURCE" "$DEST" 2>> "$LOGFILE"; then
-		echo "$(date +%Y-%m-%d.%H:%M) Moving $SOURCE -> $DEST"
-		echo "$(date +%Y-%m-%d.%H:%M) Moving $SOURCE -> $DEST" >> "$LOGFILE"
+		echo "$(date +%Y-%m-%d.%H:%M) Moving $SOURCE => $DEST" | tee -a "$LOGFILE"
 		(( MOVED++ ))
 		return 0
 	else
-		echo "$(date +%Y-%m-%d.%H:%M) ERROR: Failed to move $SOURCE" >&2
-		echo "$(date +%Y-%m-%d.%H:%M) ERROR: Failed to move $SOURCE" >> "$LOGFILE"
+		echo "$(date +%Y-%m-%d.%H:%M) ERROR: Failed to move $SOURCE" >&2 | tee -a "$LOGFILE"
 		(( ERR++ ))
 	fi
 	}
