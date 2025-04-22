@@ -1,14 +1,11 @@
 #!/bin/bash
 
 LOGFILE="user_audit_$(date +%F).log"
+
+# Arrays for all users and passwords on system
 USER_=($(sudo awk -F: '{print $1}' /etc/shadow))
 PASS_=($(sudo awk -F: '{print $2}' /etc/shadow))
 
-# Arrays for all users and passwords on system
-declare -A USER_PASS=(
-	["Users"]=$(sudo awk -F: '{print $1}' /etc/shadow)
-	["Passwords"]=$(sudo awk -F: '{print $2}' /etc/shadow)
-	)
 
 # Counters for Accounts & Errors
 ACCOUNTS=0
@@ -38,29 +35,29 @@ audit_users() {
 		else
 			(( LOCKED_ACC++ ))
 			INACTIVE_USERS+=(${USER_[x]})
-			echo "${USER_[x]} Account is Locked/Disabled." | tee -a "$LOGFILE"
+			#echo "${USER_[x]} Account is Locked/Disabled." | tee -a "$LOGFILE"
 		fi
 	done
 
-# Sets which account is Active/Inactive based on last logged date
-	for USER in ${ACTIVE_USERS[@]}; do
+
+	# Sets which account is Active/Inactive based on last logged date
+declare -A USERSTATUS=()
+LASTLOGGED=$(last $USER | head -1 | awk '{print $5, $6}')
+	for USER in "${ACTIVE_USERS[@]}"; do
 		if [[ $USER != "root" ]] && [[ $LASTLOGGED -lt $INACTIVE_DATE ]]; then
-			declare -A USERSTATUS=(
-				["Inactive"]=""
-				["Active"]=""
-				)
-			USERSTATUS["Active"]+="$USER"
+			USERSTATUS["$USER"]="Active"
 		else
-			USERSTATUS["Inactive"]+="$USER"
+			USERSTATUS["$USER"]="Inactive"
 		fi
 	done
+
 
 		# Format for User Info output
 		for ACCOUNT in ${USER_[@]}; do
 			for USERS in ${ACTIVE_USERS[@]}; do
 				if [[ "$ACCOUNT" == "$USERS" ]] && [[ "$ACCOUNT" != "root" ]] then
-					echo -e "\n*--- Account: $ACCOUNT ---*" | tee -a "$LOGFILE"
-					echo "Status: $USERSTATUS" | tee -a "$LOGFILE"
+					echo -e "\n*--- Account: $USERS ---*" | tee -a "$LOGFILE"
+					echo "Status: ${USERSTATUS["$USERS"]}" | tee -a "$LOGFILE"
 					echo "Groups: " | tee -a "$LOGFILE"
 					echo "Home Dir: " | tee -a "$LOGFILE"
 					echo "Sudo Status: $SUDOSTATUS" | tee -a "$LOGFILE"
