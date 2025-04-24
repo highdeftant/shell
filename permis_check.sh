@@ -42,9 +42,9 @@ audit_users() {
 
 	# Sets which account is Active/Inactive based on last logged date
 declare -A USERSTATUS=()
-LASTLOGGED=$(last $USER | head -1 | awk '{print $5, $6}')
+LASTLOGGED=$(date -d "$(last $USER | head -1 | awk '{print $5, $6}')" +%s)
 	for USER in "${ACTIVE_USERS[@]}"; do
-		if [[ $USER != "root" ]] && [[ $LASTLOGGED -lt $INACTIVE_DATE ]]; then
+		if [[ "$USER" != "root" ]] && [[ $LASTLOGGED -lt $INACTIVE_DATE ]]; then
 			USERSTATUS["$USER"]="Active"
 		else
 			USERSTATUS["$USER"]="Inactive"
