@@ -10,11 +10,11 @@ This is a mixture of scripts I've written - some for Debian, some for Arch
 
 **VPNSW** :
     - Switches between London and Washington, DC locations using the PIA CLI
-
+> This doesn't work as it doesn't effectively check the current set location. I also don't use PIA VPN service anymore.
 ****
 
 **Installer**:
-    - An Ubuntu based script to restore all packages/configurations after a OS Install
+    - An Ubuntu based script to restore all packages/configurations after an OS Install
 	- Makes it way easier to resume where I left off if I have a critical system error that hinders computer performance.
 	
 ****
@@ -22,7 +22,8 @@ This is a mixture of scripts I've written - some for Debian, some for Arch
 **BGRotater**:
 	- Changes the background on your PC via terminal using a folder full of pictures vs GUI
 	- Its randomized so it always gives you a surprise background different from the last (may repeat bg at times).
+    - This script only works on Debian/Ubuntu based Distributions.
 ****
 
 **Argcnt**:
-    - You can just feed this thing arguments and it'll keep count and print them out, useful!
+    - You can just feed this thing arguments and it'll keep count and print them out, useful for future scripts if you forget how
