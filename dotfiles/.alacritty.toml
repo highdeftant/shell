@@ -1,0 +1,10 @@
+# Alacritty configuration file
+
+
+
+[window]
+
+opacity = .5
+padding.x = 10
+padding.y = 10
+decorations = "Full"
