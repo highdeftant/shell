@@ -29,7 +29,7 @@ audit_users() {
 
 	# Iterates through /etc/shadow and finds accounts with passwords
 	for x in ${!USER_[@]}; do
-		if [[ ${PASS_[x]} != '!'* ]]; then
+		if [[ ${PASS_[x]} != '!'* ]] && [[ ${USER_[x]} != "root" ]]; then
 			ACTIVE_USERS+=(${USER_[x]})
 			(( ACCOUNTS++ ))
 		else
