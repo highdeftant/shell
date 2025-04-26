@@ -16,13 +16,18 @@ Plugin 'gmarik/Vundle.vim'
 " ...
 " add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
-" ----------------------------
+" ... 
 " Plugins :
-" ----------------------------
+" ...
+"
 Plugin 'sheerun/vim-polyglot'
 Plugin 'preservim/nerdtree'
 Plugin 'nathanaelkane/vim-indent-guides'
-" ----------------------------
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" ...
+"	...
 " Indent Guide Configuration :
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_enable_on_vim_startup = 1
@@ -31,8 +36,14 @@ let g:indent_guides_guide_size = 4
 set ts=1 sw=8 noet
 
 " Polyglot Configuration :
-" ----------------------------
 "
+"
+"
+" ----------------------------
+" Airline Configuration :
+let g:airline#extensions#tabline#enabled = 1"
+"
+" -----------------------------
 "
 " Themes :
 " ----------------------------
@@ -45,6 +56,7 @@ Plugin 'adrian5/oceanic-next-vim'
 Plugin 'joshdick/onedark.vim'
 Plugin 'ayu-theme/ayu-vim'
 Plugin 'tyrannicaltoucan/vim-quantum'
+Plugin 'catppuccin/nvim'
 " ...
 " -------------------------------------------
 " Colorscheme Settings...

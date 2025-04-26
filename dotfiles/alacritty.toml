@@ -1,0 +1,8 @@
+# Alacritty configuration file
+
+[window]
+
+opacity = .3
+blur = true
+dimensions = { columns = 10, lines = 10 }
+decorations = "None"
