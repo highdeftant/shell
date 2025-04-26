@@ -2,7 +2,17 @@
 
 [window]
 
-opacity = 0.6
+opacity = 0.8
 blur = true
 dimensions = { columns = 80, lines = 15 }
-decorations = "Full"
+decorations = "Transparent"
+position = "None"
+
+[cursor]
+
+style = { shape = "Beam", blinking = "On" }
+blink_interval = 900
+
+[terminal]
+
+shell = "/bin/fish"
