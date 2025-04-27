@@ -2,17 +2,23 @@
 
 [window]
 
-opacity = 0.8
+opacity = 0.92
 blur = true
-dimensions = { columns = 80, lines = 15 }
+dimensions = { columns = 80, lines = 20 }
 decorations = "Transparent"
 position = "None"
 
+[font]
+
+normal = { family = "Noto Sans Mono", style = "Bold"}
+size = 12.3
+
 [cursor]
 
-style = { shape = "Beam", blinking = "On" }
+style = { shape = "Underline", blinking = "On" }
 blink_interval = 900
 
 [terminal]
 
-shell = "/bin/fish"
+shell = "/bin/bash"
+#shell = "/bin/fish"
