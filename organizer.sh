@@ -9,15 +9,24 @@ declare -A FILE_TYPES=(
 )
 
 # Takes in directory as argument
+
 FOLDER=$1
 ERR=0
 MOVED=0
 
 # Function to move files
 move_files() {
+
 	local SOURCE="$1"
 	local DEST=$2
 	mkdir -p $DEST
+
+	if [[ ! -d $DEST ]]; then
+		echo "ERROR: $DEST2 not a valid folder." | tee -a "$LOGFILE"
+		echo "Continuing with Default Directory Creation...." | tee -a "$LOGFILE"
+		return 0
+	fi
+
 
 	if mv "$SOURCE" "$DEST" 2>> "$LOGFILE"; then
 		echo "$(date +%Y-%m-%d.%H:%M) Moving $SOURCE => $DEST" | tee -a "$LOGFILE"
@@ -38,10 +47,10 @@ fi
 	# Grabs all files in specified folder
 for FILE in "$FOLDER"/*; do
 	[[ -f "$FILE" ]] || continue
-	echo "Checking $FILE"
+	echo "Checking $FILE ..."
 	LASTMOD=`stat -c "%Y" "$FILE"`
 	ARCHTIME=`date -d "30 days ago" +%s`
-	EXT=${FILE##*.}
+	EXT=${FILE##*.-}
 	
 	# Skips all dot files
  [[ "$(basename "FILE")" == .* ]] && continue
@@ -78,3 +87,4 @@ done
 echo -e "\n======[Summary]======"
 echo "Files Moved: $MOVED"
 echo -e "Errors Encountered $ERR\n"
+
