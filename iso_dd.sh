@@ -1,18 +1,23 @@
 #!/bin/bash
 
-
-
-ISO=$1
-DIR=$2
+# This script searches though a folder labled ISO
+# Lists all ISO's found in numerical selection then
+# mounts your 32GB USB drive for quick ISO install swapping
 
 find_iso() {
+  ISO=0
+
   # Catches any errors if directory does not exist
-  if [[ ! -d $1 ]];then
-    echo "[ERROR]: Directory does not exist"
+  if [[ ! -d  ]]; then
+    echo "[ERROR]: Directory does not exist."
   fi
 
-# TO DO: add case statements for each ISO in folder  
-#  case "$ISO" in;
-#    eos)
+  for FILE in $(ls $DIR); do
+    echo "[$ISO]"
+    if [[ ${FILE##.-} == ".iso" ]]; then
+
+    fi
+  done
+
 
 }
