@@ -3,11 +3,12 @@
 # todo: Add a function to compare file size
 # with free storage on server
 
+$DEST="/home/$USER/Plex/Media/Movies"
+
 addMovie() {
   MOVIE=$1
   local USER='gh0stpi'
   local HOST='hashirama'
-  local $DEST='/home/$USER/Plex/Movies'
 
   if [[ ! -f $MOVIE ]]; then
     echo "[ERROR]: $MOVIE not found"
@@ -15,13 +16,14 @@ addMovie() {
     rsync -av -e ssh $MOVIE $USER@$HOST:$DEST
     echo "[SUCCESS]: Moved $MOVIE to $DEST"
   fi
-}
+
 
 
 # todo: Add funtion to scan for files older
 # than 30 days and prompt to delete/keep
 archiveFile() {
-  COUNT=ssh $USER@$HOST ls | wc -l
-
+  COUNT=ssh $USER@$HOST "ls $DEST | wc -l"
 }
+
+
 addMovie
