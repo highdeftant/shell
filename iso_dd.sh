@@ -4,7 +4,7 @@
 # Lists all ISO's found in numerical selection then
 # mounts your 32GB USB drive for quick ISO install swapping
 
-find_iso() {
+findIso() {
   NUM=0
 
   # Catches any errors if directory does not exist
@@ -15,22 +15,23 @@ find_iso() {
   # List all ISOs in folder by number
   cd $1
 
-  for NUM in $(ls $DIR | wc -l); do
-    for FILE in $(ls); do
+  for NUM in $(ls -A $1 | wc -l); do
+    for FILE in $(ls -A); do
+
     if [[ ${FILE##.-} == "*.iso"  ]]; then
-      echo "[$NUM]:  $ISO"
+      echo "[$NUM]: $ISO"
     fi
+
   done
 done
-
 }
 
 
 checkUUID() {
-  UUID=""
-  lsusb
-
+  UUID="67DA-AABF"
   if [[ "$DEV" == "$UUID" ]]; then
-    find_iso
+    findIso $1
   fi
 }
+
+findIso
