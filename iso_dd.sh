@@ -32,4 +32,7 @@ checkUUID() {
   fi
 }
 
+# Run functions
+
+checkUUID
 findIso
