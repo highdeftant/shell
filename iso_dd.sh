@@ -28,15 +28,18 @@ findIso() {
 
 # Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
-  DEV=`lsblk | grep $UUID`
+  DEV=`blkid | awk '/UUID/ {print $3}'
   UUID="67DA-AABF"
 
-  if [[ "$DEV" == "$UUID" ]]; then
-    findIso $1
-  fi
+  for DEVICE in $DEV; do
+    if [[ "$DEV" == "$UUID" ]]; then
+      findIso $1
+    else
+      echo "[ERROR]: UUID Not Found. USB may not be mounted."
+    fi
+  done
 }
 
 # Run functions
-
 checkUUID
 findIso
