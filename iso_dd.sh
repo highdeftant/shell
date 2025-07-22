@@ -15,21 +15,21 @@ findIso() {
 
   # List all ISOs in folder by number
   for FILE in $(ls -A $1); do
-    if [ -f "$FILE"  ]; || continue
-      if [[ ${FILE##.-} == "*.iso" || ".img"  ]]; then
+    if [ -f "$FILE"  ]; then
+      if [[ ${FILE##.-} == "*.iso"  ]]; then #Checks for .ext
         echo "ISO BOOTER V0.1"
         echo "----- CHOOSE ISO -----"
         NUM=$((NUM + 1))
-        echo "[$NUM]: $ISO"
+        echo "[$NUM]: $ISO" #Lists Number of file, filename
       fi
-       read -r "IMG/ISO to Mount" CHOICE
+       read -r "IMG/ISO to Mount" CHOICE #Ask user for ISO Choice
     fi
   done
 }
 
 # Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
-  DEV=`blkid | awk '/UUID/ {print $3}'
+  DEV=$(blkid | awk '/UUID/ {print $3}')
   UUID2="65d75412-118b-49d6-b2ce-2bf1448c711b"
 
   for DEVICE in $DEV; do
@@ -42,8 +42,11 @@ checkUUID() {
 }
 
 burnISO() {
-  DEST=
-  sudo dd if=/path/to/yourfile.img of=/dev/sdX bs=4M status=progress   
+  DEST=$1
+  DEV=$2
+
+  sudo dd if="$DEST" of="$DEV" bs=4M status=progress   
+
 }
 
 
