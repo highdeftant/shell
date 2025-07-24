@@ -3,12 +3,13 @@
 # todo: Add a function to compare file size
 # with free storage on server
 
+DEST="Plex/Media/Movies"
+
 addMovie() {
   MOVIE="$1"
 
   local USER="gh0stpi"
   local HOST="hashirama"
-  local DEST="Plex/Media/Movies"
 
   if [[ ! -f "$MOVIE" ]]; then
     echo "[ERROR]: $MOVIE not found"
@@ -23,9 +24,23 @@ addMovie() {
 
 
 # todo: Add funtion to scan for files older
-# than 30 days and prompt to delete/keep
+# than 30+ days and prompt to delete/keep
+
 archiveFile() {
-  COUNT=ssh $USER@$HOST "ls $DEST | wc -l"
+  LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
+  NUM=0
+
+  for FILE in $LISTFILE; do
+    if [[ -f $FILE ]]; || continue
+    ARCHIVE=`date -d "30 days ago" +%s`
+    LASTMOD=`date -c "%Y" "$FILE"`
+      if [[ $LASTMOD -lt $ARCHTIME ]]; then
+      fi
+    fi
+  done
+
+
+
 }
 
 
