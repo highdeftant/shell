@@ -32,9 +32,13 @@ archiveFile() {
 
   for FILE in $LISTFILE; do
     if [[ -f $FILE ]]; || continue
-    ARCHIVE=`date -d "30 days ago" +%s`
-    LASTMOD=`date -c "%Y" "$FILE"`
-      if [[ $LASTMOD -lt $ARCHTIME ]]; then
+      EXT=${FILE##*.-}
+      ARCHIVE=`date -d "30 days ago" +%s`
+      LASTMOD=`date -c "%Y" "$FILE"`
+      if [[ $EXT ]]; then
+        if [[ $LASTMOD -lt $ARCHTIME ]]; then
+        fi
+
       fi
     fi
   done
