@@ -38,10 +38,20 @@ archiveFile() {
       EXT=${FILE##*.-}
       ARCHIVE=`date -d "30 days ago" +%s`
       LASTMOD=`date -c "%Y" "$FILE"`
-      if [[ $EXT == ".iso[ISO]" ]]; then
+
+      # Checks extention for .iso
+      case $EXT in
+        ISO|iso)
         if [[ $LASTMOD -lt $ARCHTIME ]]; then
+
+          # Prints all files found over 30 days
+          echo -e "Files Older than 30 days\n"
+          echo $FILE
+
+     # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
+        #if [[ $LASTMOD -lt $ARCHTIME ]]; then
         fi
-      fi
+    esac
     fi
   done
 
