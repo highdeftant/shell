@@ -19,7 +19,7 @@ addMovie() {
   fi
 }
 
-# todo: Add text processor for "\", ...
+# todo: Add text processor for "\"
 # possibly using sed/awk
 
 
@@ -30,15 +30,17 @@ archiveFile() {
   LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
   NUM=0
 
+  # Iterates through folder and checks
+  # last modded date of file
+
   for FILE in $LISTFILE; do
     if [[ -f $FILE ]]; || continue
       EXT=${FILE##*.-}
       ARCHIVE=`date -d "30 days ago" +%s`
       LASTMOD=`date -c "%Y" "$FILE"`
-      if [[ $EXT ]]; then
+      if [[ $EXT == ".iso[ISO]" ]]; then
         if [[ $LASTMOD -lt $ARCHTIME ]]; then
         fi
-
       fi
     fi
   done

@@ -20,10 +20,12 @@ move_files() {
 	local SOURCE="$1"
 	local DEST=$2
 	mkdir -p $DEST
-
+	
+	# Checks if directory exists, if not it creates a default directory
 	if [[ ! -d $DEST ]]; then
 		echo "ERROR: $DEST2 not a valid folder." | tee -a "$LOGFILE"
 		echo "Continuing with Default Directory Creation...." | tee -a "$LOGFILE"
+		sleep 3
 		return 0
 	fi
 
