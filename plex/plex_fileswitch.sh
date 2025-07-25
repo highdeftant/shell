@@ -28,7 +28,7 @@ addMovie() {
 
 archiveFile() {
   LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
-  NUM=0
+  NUM=1
 
   # Iterates through folder and checks
   # last modded date of file
@@ -46,17 +46,15 @@ archiveFile() {
 
           # Prints all files found over 30 days
           echo -e "Files Older than 30 days\n"
-          echo $FILE
-
+          echo $("[$NUM]: $FILE" "- $ARCHTIME")
+          (( NUM ++ )
+        ;;
      # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
         #if [[ $LASTMOD -lt $ARCHTIME ]]; then
         fi
     esac
     fi
   done
-
-
-
 }
 
 
