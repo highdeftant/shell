@@ -47,8 +47,8 @@ archiveFile() {
           # Prints all files found over 30 days
           echo -e "Files Older than 30 days\n"
           echo $("[$NUM]: $FILE" "- $ARCHTIME")
-          (( NUM ++ )
-        ;;
+          (( NUM ++ ))
+          ;;
      # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
         #if [[ $LASTMOD -lt $ARCHTIME ]]; then
         fi
