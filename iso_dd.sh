@@ -11,7 +11,7 @@ findIso() {
     exit
   fi
 
-  # List all ISOs in folder by number
+  # List all files, finds the .iso, adds it to array
   for FILE in $(ls -A $1); do
     if [ -f "$FILE"  ]; then
       # Checks for .ext
