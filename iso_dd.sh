@@ -5,8 +5,6 @@
 # mounts your 32GB USB drive for quick ISO install swapping
 
 findIso() {
-  NUM=0
-
   # Checks directory existence
   if [[ ! -d $1 ]]; then
     echo "[ERROR]: Directory does not exist."
@@ -16,15 +14,29 @@ findIso() {
   # List all ISOs in folder by number
   for FILE in $(ls -A $1); do
     if [ -f "$FILE"  ]; then
-      if [[ ${FILE##.-} == "*.iso"  ]]; then #Checks for .ext
-        echo "ISO BOOTER V0.1"
-        echo "----- CHOOSE ISO -----"
-        NUM=$((NUM + 1))
-        echo "[$NUM]: $ISO" #Lists Number of file, filename
+      # Checks for .ext
+      if [[ ${FILE##.-} == "*.iso"  ]]; then 
+        # Create list and add isos to list
+        declare -A ISOLIST=()
+        ISOLIST["ISOS"]="$FILE"
       fi
-       read -r "IMG/ISO to Mount" CHOICE #Ask user for ISO Choice
     fi
   done
+
+  echo "ISO BOOTER V0.1"
+  echo "----- CHOOSE ISO -----"
+
+  for NUM in ${!ISOLIST[@]}; do
+    for FILE in ${ISOLIST[@]}; do
+     #Lists Number of file, filename
+     echo "[$NUM]: ${ISOLIST[NUM]}"
+   done
+ done
+
+  
+  read -r "IMG/ISO to Mount" CHOICE #Ask user for ISO Choice
+  
+  
 }
 
 # Checks UUID for specific UUID if the same drive is always used
