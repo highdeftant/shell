@@ -23,7 +23,10 @@ findIso() {
     fi
   done
 
-  echo "ISO BOOTER V0.1"
+  echo "**** ISO BOOTER V0.1****"
+  for star in {0..4}; do
+    echo "*"
+  done
   echo "----- CHOOSE ISO -----"
 
   for NUM in ${!ISOLIST[@]}; do
@@ -33,11 +36,8 @@ findIso() {
    done
  done
 
-  
-  read -r "IMG/ISO to Mount" CHOICE #Ask user for ISO Choice
-  
-  
-}
+  # Ask user for ISO Choice
+  read -r "IMG/ISO to Mount" CHOICE }
 
 # Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
@@ -53,15 +53,13 @@ checkUUID() {
   done
 }
 
+# Takes the selected ISO and burns it to the disk
 burnISO() {
   DEST=$1
   DEV=$2
 
   sudo dd if="$DEST" of="$DEV" bs=4M status=progress   
-
 }
 
-
-# Run functions
 checkUUID
 findIso
