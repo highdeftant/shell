@@ -25,7 +25,7 @@ findIso() {
 
   echo "**** ISO BOOTER V0.1****"
   for star in {0..4}; do
-    echo "*"
+    echo "*                   *"
   done
   echo "----- CHOOSE ISO -----"
 
@@ -37,7 +37,8 @@ findIso() {
  done
 
   # Ask user for ISO Choice
-  read -r "IMG/ISO to Mount" CHOICE }
+  read -r "IMG/ISO to Mount" CHOICE
+}
 
 # Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
