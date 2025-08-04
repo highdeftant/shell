@@ -6,7 +6,6 @@ monitorStart() {
 	sudo airmon-ng check kill
 	sudo airmon-ng start wlan0
 	
-	# Starts wifi scanning
 	while true; do
 		read -r -p "Start Monitoring? [Y/N]: " ANSWER
 		case $ANSWER in

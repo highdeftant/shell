@@ -34,26 +34,24 @@ archiveFile() {
   # last modded date of file
 
   for FILE in $LISTFILE; do
-    if [[ -f $FILE ]]; || continue
-      EXT=${FILE##*.-}
-      ARCHIVE=`date -d "30 days ago" +%s`
-      LASTMOD=`date -c "%Y" "$FILE"`
+    [[ -f $FILE ]]; || continue
+    EXT=${FILE##*.-}
+    ARCHIVE=`date -d "30 days ago" +%s`
+    LASTMOD=`date -c "%Y" "$FILE"`
 
       # Checks extention for .iso
-      case $EXT in
-        ISO|iso)
-        if [[ $LASTMOD -lt $ARCHTIME ]]; then
-
-          # Prints all files found over 30 days
-          echo -e "Files Older than 30 days\n"
-          echo $("[$NUM]: $FILE" "- $ARCHTIME")
-          (( NUM ++ ))
-          ;;
-     # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
-        #if [[ $LASTMOD -lt $ARCHTIME ]]; then
-        fi
+    case $EXT in
+      ISO|iso)
+      if [[ $LASTMOD -lt $ARCHTIME ]]; then
+       # Prints all files found over 30 days
+       echo -e "Files Older than 30 days\n"
+       echo $("[$NUM]: $FILE" "- $ARCHTIME")
+       (( NUM ++ ))
+       ;;
+  # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
+     #if [[ $LASTMOD -lt $ARCHTIME ]]; then
+      fi
     esac
-    fi
   done
 }
 
