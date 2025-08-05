@@ -18,13 +18,12 @@ function VPNDC() {
 
 read -p "Which Region? [mexico/wash]: " ANSWER
 
-if [[ $ANSWER == "mexico" ]]
-then
+if [[ "$ANSWER" == "mexico" ]]; then
 	VPNMEXICO
 	piactl get connectionstate
 fi
 
-if [[ $ANSWER == "wash" ]]
+if [[ "$ANSWER" == "wash" ]]
 then
 	VPNDC
 	piactl get connectionstate
