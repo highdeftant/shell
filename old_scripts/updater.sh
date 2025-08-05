@@ -7,3 +7,4 @@ updateSys() {
     sudo apt $item
   done
 }
+updateSys
