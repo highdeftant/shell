@@ -6,10 +6,12 @@
 
 # Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
+  declare -A DEVICE=()
   DEV=$(blkid | awk '/UUID/ {print $3}')
   UUID2="65d75412-118b-49d6-b2ce-2bf1448c711b"
 
   for DEVICE in $DEV; do
+
     if [[ "$DEV" == "$UUID" ]]; then
       findIso $1
     else
