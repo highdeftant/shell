@@ -29,7 +29,6 @@ move_files() {
 		return 0
 	fi
 
-
 	if mv "$SOURCE" "$DEST" 2>> "$LOGFILE"; then
 		echo "$(date +%Y-%m-%d.%H:%M) Moving $SOURCE => $DEST" | tee -a "$LOGFILE"
 		(( MOVED++ ))
@@ -89,4 +88,3 @@ done
 echo -e "\n======[Summary]======"
 echo "Files Moved: $MOVED"
 echo -e "Errors Encountered $ERR\n"
-

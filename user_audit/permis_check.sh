@@ -2,12 +2,10 @@
 
 LOGFILE="user_audit_$(date +%F).log"
 
-# Arrays for all users and passwords on system
 USER_=($(sudo awk -F: '{print $1}' /etc/shadow))
 PASS_=($(sudo awk -F: '{print $2}' /etc/shadow))
 
 
-# Counters for Accounts & Errors
 ACCOUNTS=0
 LOCKED_ACC=0
 ERR=0
@@ -67,7 +65,6 @@ LASTLOGGED=$(date -d "$(last $USER | head -1 | awk '{print $5, $6}')" +%s)
 		done
 			done
 	
-	# Audit Summary area
 	echo -e "====[ AUDIT SUMMARY ]====\n"
 	if [[ $ACCOUNTS -gt 1 ]]; then
 		echo -e "$ACCOUNTS Accounts have been found.\n" | tee -a "$LOGFILE"

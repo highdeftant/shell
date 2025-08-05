@@ -22,38 +22,33 @@ addMovie() {
 # todo: Add text processor for "\"
 # possibly using sed/awk
 
-
 # todo: Add funtion to scan for files older
 # than 30+ days and prompt to delete/keep
 
 archiveFile() {
   LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
-  NUM=1
 
   # Iterates through folder and checks
   # last modded date of file
 
+
+  #this function needs some rearrangement
   for FILE in $LISTFILE; do
     [[ -f $FILE ]]; || continue
     EXT=${FILE##*.-}
     ARCHIVE=`date -d "30 days ago" +%s`
     LASTMOD=`date -c "%Y" "$FILE"`
-
-      # Checks extention for .iso
+    declare -A OLDMOVIES=()
     case $EXT in
-      ISO|iso)
+      mp4|MP4)
+        OLDMOVIES["Archive"]="$FILE"
       if [[ $LASTMOD -lt $ARCHTIME ]]; then
-       # Prints all files found over 30 days
-       echo -e "Files Older than 30 days\n"
-       echo $("[$NUM]: $FILE" "- $ARCHTIME")
-       (( NUM ++ ))
-       ;;
-  # if [a[ $EXT == "."[Ii][Ss][Oo] ]]; then
-     #if [[ $LASTMOD -lt $ARCHTIME ]]; then
+        done
+        echo "- [$FILENUM] $FILE "
       fi
+       ;;
     esac
   done
 }
-
 
 addMovie $1
