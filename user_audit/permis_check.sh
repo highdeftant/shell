@@ -10,6 +10,12 @@ ACCOUNTS=0
 LOCKED_ACC=0
 ERR=0
 
+if ! $(sudo -v &> /dev/null); then
+	echo "ERROR: root privileges are need to run this script."
+	echo "Exiting..."
+	exit 87
+fi
+
 # Get accounts with Wheel access
 #get_wheel() {
 #	local IFS=","
@@ -24,6 +30,7 @@ audit_users() {
 	INACTIVE_DATE=$(date -d "14 days ago" +%s)
 
 	echo -e "\n====[ USER AUDIT REPORT ]====\n" | tee -a "$LOGFILE"
+	for 
 
 	# Iterates through /etc/shadow and finds accounts with passwords
 	for x in ${!USER_[@]}; do
@@ -74,11 +81,5 @@ LASTLOGGED=$(date -d "$(last $USER | head -1 | awk '{print $5, $6}')" +%s)
 
 }
 
-# Test if user is in sudo group before script execution
-if ! $(sudo -v &> /dev/null); then
-	echo "ERROR: root privileges are need to run this script."
-	echo "Exiting..."
-	exit 87
-fi
 
 audit_users

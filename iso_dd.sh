@@ -4,7 +4,6 @@
 # Lists all ISO's found in numerical selection then
 # mounts your 32GB USB drive for quick ISO install swapping
 
-# Checks UUID for specific UUID if the same drive is always used
 checkUUID() {
   declare -A DEVICE=()
   DEV=$(blkid | awk '/UUID/ {print $3}')
@@ -26,19 +25,16 @@ findIso() {
     exit
   fi
 
-  # List all files, finds the .iso, adds it to array
   for FILE in $(ls -A $1); do
     if [ -f "$FILE"  ]; then
-      # Checks for .ext
       if [[ ${FILE##.-} == "*.iso"  ]]; then 
-        # Create list and add isos to list
         declare -A ISOLIST=()
         ISOLIST["ISOS"]="$FILE"
       fi
     fi
   done
 
-  echo "----- ISO BOOTER V0.1 -----"
+  echo "----- ISO BOOTER v0.2 -----"
   for star in {0..4}; do
     echo "|                   |"
   done
