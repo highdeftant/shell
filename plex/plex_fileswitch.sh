@@ -42,11 +42,8 @@ archiveFile() {
     case $EXT in
       mp4|MP4)
         OLDMOVIES["Archive"]="$FILE"
-      if [[ $LASTMOD -lt $ARCHTIME ]]; then
-        done
-        echo "- [$FILENUM] $FILE "
-      fi
-       ;;
+        OLDMOVIES["Times"]=$LASTMOD
+        ;;
     esac
   done
 }
