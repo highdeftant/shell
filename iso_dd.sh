@@ -4,6 +4,10 @@
 # Lists all ISO's found in numerical selection then
 # mounts your 32GB USB drive for quick ISO install swapping
 
+
+
+DIR=$1
+
 checkUUID() {
   declare -A DEVICE=()
   DEV=$(blkid | awk '/UUID/ {print $3}')
@@ -12,7 +16,7 @@ checkUUID() {
   for DEVICE in $DEV; do
 
     if [[ "$DEV" == "$UUID" ]]; then
-      findIso $1
+      findIso "$DIR"
     else
       echo "[ERROR]: UUID Not Found. USB may not be mounted."
     fi
@@ -20,12 +24,12 @@ checkUUID() {
 }
 
 findIso() {
-  if [[ ! -d $1 ]]; then
+  if [[ ! -d "$DIR" ]]; then
     echo "[ERROR]: Directory does not exist."
     exit
   fi
 
-  for FILE in $(ls -A $1); do
+  for FILE in $(ls -A "$DIR"); do
     if [ -f "$FILE"  ]; then
       if [[ ${FILE##.-} == "*.iso"  ]]; then 
         declare -A ISOLIST=()
@@ -35,7 +39,7 @@ findIso() {
   done
 
   echo "----- ISO BOOTER v0.2 -----"
-  for star in {0..4}; do
+  for star in {0..2}; do
     echo "|                   |"
   done
   echo -e "----- CHOOSE ISO -----\n"
@@ -57,6 +61,6 @@ burnISO() {
   sudo dd if="$DEST" of="$DEV" bs=4M status=progress   
 }
 
-checkUUID
+#checkUUID
 findIso
 burnISO
