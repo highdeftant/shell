@@ -5,7 +5,6 @@
 # mounts your 32GB USB drive for quick ISO install swapping
 
 
-
 DIR=$1
 
 checkUUID() {
@@ -63,4 +62,4 @@ burnISO() {
 
 #checkUUID
 findIso
-burnISO
+#burnISO
