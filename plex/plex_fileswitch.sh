@@ -10,7 +10,7 @@ addMovie() {
 
   local USER="gh0stpi"
   local HOST="hashirama"
-
+  
   if [[ ! -f "$MOVIE" ]]; then
     echo "[ERROR]: "$MOVIE" not found"
   else
@@ -19,6 +19,19 @@ addMovie() {
   fi
 }
 
+addMovie "$1"
+
+list_dir() {
+  NUM=0
+
+  if [[ -d "$MOVIE" ]]; then
+    echo "v- Move which file -v"
+    for "SERIES" in "$MOVIE"; do
+      (( NUM ++))
+      echo "[$NUM]:" "$SERIES"
+    done
+  fi
+}
 # todo: Add text processor for "\"
 # possibly using sed/awk
 
@@ -48,4 +61,3 @@ addMovie() {
 #  done
 #}
 #
-addMovie "$1"
