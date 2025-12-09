@@ -27,7 +27,7 @@ list_dir() {
   if [[ -d "$MOVIE" ]]; then
     echo "v- Move which file -v"
     for "SERIES" in "$MOVIE"; do
-      (( NUM ++))
+      (( NUM ++ ))
       echo "[$NUM]:" "$SERIES"
     done
   fi
