@@ -3,7 +3,7 @@
 # todo: Add a function to compare file size
 # with free storage on server
 
-DEST="Plex/Media/"
+DEST="/mnt/Plex/Media/"
 
 addMovie() {
   MOVIE="$1"
@@ -19,6 +19,26 @@ addMovie() {
   fi
 }
 
+checkfile_dir() {
+  TARGET=$1
+
+  local USER="gh0stpi"
+  local HOST="hashirama"
+
+  case true in
+    $([ ! -f $TARGET ]))
+      echo "[ERR]: Possibly not a file. CHECK:: $TARGET"
+      ;;
+    $([ ! -d $TARGET ]))
+      echo "[ERR]: Possibly not a Directory. CHECK:: $TARGET"
+      ;;
+    *)
+      rsync -av -e ssh -P "$TARGET" "$USER"@"$HOST":"$DEST"
+      ;;
+  esac
+}
+# addMovie "$1"
+checkfile_dir "$1"
 # todo: Add text processor for "\"
 # possibly using sed/awk
 
@@ -48,4 +68,3 @@ addMovie() {
 #  done
 #}
 #
-addMovie "$1"
