@@ -3,35 +3,29 @@
 # todo: Add a function to compare file size
 # with free storage on server
 
-DEST="Plex/Media/"
+DEST="/mnt/Plex/Media/"
 
 addMovie() {
   MOVIE="$1"
 
   local USER="gh0stpi"
   local HOST="hashirama"
-  
-  if [[ ! -f "$MOVIE" ]]; then
-    echo "[ERROR]: "$MOVIE" not found"
-  else
+
+  case true in
+    $([[ -f $MOVIE ]]))
+      echo "[ERR]: Cannot move file. Check -> $MOVIE"
+      ;;
+    $([[ -d $MOVIE ]]))
+      echo "[ERR]: Cannot move directory. Check -> $MOVIE"
+      ;;
+    *)
     rsync -av -e ssh -P "$MOVIE" "$USER"@"$HOST":"$DEST"
     echo "[SUCCESS]: Moved "$MOVIE" to "$DEST""
-  fi
-}
+    ;;
+esac
 
 addMovie "$1"
 
-list_dir() {
-  NUM=0
-
-  if [[ -d "$MOVIE" ]]; then
-    echo "v- Move which file -v"
-    for "SERIES" in "$MOVIE"; do
-      (( NUM ++ ))
-      echo "[$NUM]:" "$SERIES"
-    done
-  fi
-}
 # todo: Add text processor for "\"
 # possibly using sed/awk
 

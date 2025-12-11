@@ -7,14 +7,13 @@ plexdir = 'mnt/Plex/Media/'
 destinations = ['Movies', 'TV Shows', 'Anime']
 
 def list_dir(folder):
-
-    global plexdir, destinations
+    num = 0
     files = os.listdir(folder)
 
     for item in files:
-        file_path = Path(folder) / file
-        # Check if file is a file
-        if Path(file_path).is_file():
-            last mtime = datetime.fromtimestamp(file_path.stat().st_mtime)
-            
+        if os.path.isfile(item):
+            num += 1
+            return item
 
+
+list_dir(sys.argv[1])
