@@ -11,13 +11,20 @@ addMovie() {
   local USER="gh0stpi"
   local HOST="hashirama"
 
-  if [[ ! -f "$MOVIE" ]]; then
-    echo "[ERROR]: "$MOVIE" not found"
-  else
+  case true in
+    $([[ -f $MOVIE ]]))
+      echo "[ERR]: Cannot move file. Check -> $MOVIE"
+      ;;
+    $([[ -d $MOVIE ]]))
+      echo "[ERR]: Cannot move directory. Check -> $MOVIE"
+      ;;
+    *)
     rsync -av -e ssh -P "$MOVIE" "$USER"@"$HOST":"$DEST"
     echo "[SUCCESS]: Moved "$MOVIE" to "$DEST""
-  fi
-}
+    ;;
+esac
+
+addMovie "$1"
 
 checkfile_dir() {
   TARGET=$1
