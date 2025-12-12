@@ -3,7 +3,7 @@
 import os, sys
 from datetime import datetime, timedelta
 
-plexdir = 'mnt/Plex/Media/'
+plexdir = '/mnt/Plex/Media/'
 destinations = ['Movies', 'TV Shows', 'Anime']
 
 def list_dir(folder):
@@ -13,7 +13,6 @@ def list_dir(folder):
     for item in files:
         if os.path.isfile(item):
             num += 1
-            return item
-
+            print(num)
 
 list_dir(sys.argv[1])
