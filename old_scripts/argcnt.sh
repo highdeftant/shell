@@ -6,8 +6,7 @@ echo "there are $# arguments"
 
 for i in $@
 do
-	if [[ $num -eq ]]
-		then
+	if [[ $num -lt 0 ]]; then
 			echo "arg $num: $i"
 			((num++))
 	fi

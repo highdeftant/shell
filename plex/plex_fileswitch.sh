@@ -12,10 +12,10 @@ addMovie() {
   local HOST="hashirama"
 
   case true in
-    $([[ -f $MOVIE ]]))
+    $([[ ! -f $MOVIE ]]))
       echo "[ERR]: Cannot move file. Check -> $MOVIE"
       ;;
-    $([[ -d $MOVIE ]]))
+    $([[ ! -d $MOVIE ]]))
       echo "[ERR]: Cannot move directory. Check -> $MOVIE"
       ;;
     *)
@@ -24,7 +24,37 @@ addMovie() {
     ;;
 esac
 
-addMovie "$1"
+archiveFile() {
+  local DEST='~/Downloads'
+
+  LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
+
+  # Iterates through folder and checks
+  # last modded date of file
+
+  #this function needs some rearrangement
+  for FILE in $(ls -A $DEST); do
+    if [[ -f "$FILE" ]]; || continue
+    EXT=${FILE##*.-}
+    ARCHIVE=`date -d "30 days ago" +%s`
+    LASTMOD=`date -c "%Y" "$FILE"`
+
+    declare -A OLDMOVIES=()
+
+    case $EXT in
+      mp4|MP4)
+        OLDMOVIES["Archive"]="$FILE"
+        OLDMOVIES["Times"]=$LASTMOD
+        ;;
+      mp3|MP3)
+        OLDMOVIES
+    esac
+  done
+}
+
+
+archiveFile
+#addMovie "$1"
 
 checkfile_dir() {
   TARGET=$1
@@ -49,29 +79,3 @@ checkfile_dir "$1"
 # todo: Add text processor for "\"
 # possibly using sed/awk
 
-# todo: Add funtion to scan for files older
-# than 30+ days and prompt to delete/keep
-
-#archiveFile() {
-#  LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
-#
-#  # Iterates through folder and checks
-#  # last modded date of file
-#
-#
-#  #this function needs some rearrangement
-#  for FILE in $LISTFILE; do
-#    [[ -f $FILE ]]; || continue
-#    EXT=${FILE##*.-}
-#    ARCHIVE=`date -d "30 days ago" +%s`
-#    LASTMOD=`date -c "%Y" "$FILE"`
-#    declare -A OLDMOVIES=()
-#    case $EXT in
-#      mp4|MP4)
-#        OLDMOVIES["Archive"]="$FILE"
-#        OLDMOVIES["Times"]=$LASTMOD
-#        ;;
-#    esac
-#  done
-#}
-#
