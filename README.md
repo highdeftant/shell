@@ -1,29 +1,31 @@
 # Bash Scripts
 
-This is a mixture of scripts I've written - some for Debian, some for Arch
-> Warning! A lot of these programs are possibly deprecated. Use at own risk.
+Archive of shell scripts — some for Debian, some for Arch Linux.  Many are deprecated or incomplete.  **Use at your own risk.**
 
-**backupOS**:
-    - Uses rsync to make a mirror image of $USER folder, this copies only the differences and will delete anything that gets deleted, keeping everything
+## Scripts
 
-****
+**imgburn.sh** — `dd` an ISO image to a USB drive.
+```bash
+# ./imgburn.sh <image.iso> /dev/sdX
+# Example: ./imgburn.sh ubuntu.iso /dev/sdb
+```
+> **Danger**: This uses `dd` without safety checks. Double-check the device path to avoid erasing wrong drives.
 
-**VPNSW** :
-    - Switches between London and Washington, DC locations using the PIA CLI
-> This doesn't work as it doesn't effectively check the current set location. I also don't use PIA VPN service anymore.
-****
+**old_scripts/installer.sh** — System setup/archive script. Installs:
+- Vundle.vim (Vim plugin manager)
+- GNOME settings helpers (GwE function)
+- Kismet (wireless network detector)
+- Cursor pointer location toggle
+- Various deb packages from a backup location
 
-**Installer**:
-    - An Ubuntu based script to restore all packages/configurations after an OS Install
-	- Makes it way easier to resume where I left off if I have a critical system error that hinders computer performance.
-	
-****
+Intended for archival/system restore workflows.  May need `~/Documents/packages/installfiles.txt` present.
 
-**BGRotater**:
-	- Changes the background on your PC via terminal using a folder full of pictures vs GUI
-	- Its randomized so it always gives you a surprise background different from the last (may repeat bg at times).
-    - This script only works on Debian/Ubuntu based Distributions.
-****
+## Usage
 
-**Argcnt**:
-    - You can just feed this thing arguments and it'll keep count and print them out, useful for future scripts if you forget how
+Run directly (bash shebang is present):  `./script.sh [args]`
+
+## Notes
+
+- These scripts are not actively maintained.  Review before using.
+- `imgburn.sh` is a dumb wrapper around `dd`.  Consider using `ddrescue` or `wipr` for safer imaging.
+- `installer.sh` is legacy; prefer package manager scripts for reproducibility.
