@@ -1,66 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# todo: Add a function to compare file size
-# with free storage on server
+if [[ $# -ne 1 || -z "${1:-}" ]]; then
+  printf 'Usage: %s /path/to/movie-file\n' "$0" >&2
+  exit 2
+fi
 
-DEST="/mnt/backpack/Plex/Media/"
+config_file="${PLEX_FILESWITCH_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/plex/plex_fileswitch.env}"
+if [[ -r "$config_file" ]]; then
+  # shellcheck source=/dev/null
+  source "$config_file"
+fi
 
-addMovie() {
-  MOVIE="$1"
+: "${PLEX_DEST:?Set PLEX_DEST in $config_file or the environment}"
+: "${PLEX_USER:?Set PLEX_USER in $config_file or the environment}"
+: "${PLEX_HOST:?Set PLEX_HOST in $config_file or the environment}"
 
-  local USER="gh0stpi"
-  local HOST="hashirama"
+movie="$1"
+if [[ ! -f "$movie" ]]; then
+  printf '[ERR]: Not a regular file: %s\n' "$movie" >&2
+  exit 1
+fi
 
-  case true in
-    $([[ ! -f $MOVIE ]]))
-      echo "[ERR]: Cannot move file. Check -> $MOVIE"
-      ;;
-    $([[ ! -d $MOVIE ]]))
-      echo "[ERR]: Cannot move directory. Check -> $MOVIE"
-      ;;
-    *)
-    rsync -av -e ssh -P "$MOVIE" "$USER"@"$HOST":"$DEST"
-    echo "[SUCCESS]: Moved "$MOVIE" to "$DEST""
-    ;;
-esac
-}
-
-<<<<<<< HEAD
-addMovie $1
-=======
-#archiveFile() {
-#  local DEST='~/Downloads'
-#
-#  LISTFILE=$(ssh $USER@$HOST ls -A "$DEST")
-#
-#  # Iterates through folder and checks
-#  # last modded date of file
-#
-#  #this function needs some rearrangement
-#  for FILE in $(ls -A $DEST); do
-#    if [[ -f "$FILE" ]]; || continue
-#    EXT=${FILE##*.-}
-#    ARCHIVE=`date -d "30 days ago" +%s`
-#    LASTMOD=`date -c "%Y" "$FILE"`
-#
-#    declare -A OLDMOVIES=()
-#
-#    case $EXT in
-#      mp4|MP4)
-#        OLDMOVIES["Archive"]="$FILE"
-#        OLDMOVIES["Times"]=$LASTMOD
-#        ;;
-#      mp3|MP3)
-#        OLDMOVIES
-#    esac
-#  done
-#}
-#
-#
-#archiveFile
-addMovie "$1"
->>>>>>> refs/remotes/origin/main
-
-# todo: Add text processor for "\"
-# possibly using sed/awk
-
+rsync -av -e ssh -P -- "$movie" "${PLEX_USER}@${PLEX_HOST}:${PLEX_DEST}"
+printf '[SUCCESS]: Moved %s to %s\n' "$movie" "$PLEX_DEST"

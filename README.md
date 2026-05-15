@@ -1,8 +1,8 @@
-# Bash Scripts Collection
+# Shell Scripts Collection
 
 Archived shell scripts for system administration, media management, and development workflows.
 
-> ⚠️ **Warning**: Many scripts are deprecated, incomplete, or contain merge conflicts. Review before execution.  Some use `sudo` without argument sanitization.
+> ⚠️ **Warning**: Some scripts are deprecated or incomplete; review before execution. Some use `sudo` without argument sanitization.
 
 ---
 
@@ -15,6 +15,7 @@ Archived shell scripts for system administration, media management, and developm
 ├── dotfiles/                # Personal configuration (alacritty, vim, fish)
 │   └── fish_config/         # Tide theme installer
 ├── file_organizer/          # Automated file sorting by type
+├── fix-fingerprint-pam.sh   # Configure fingerprint authentication in PAM
 ├── iso_dd.sh                # ISO image writing tool
 ├── imgburn.sh               # USB burning via `dd` (DANGEROUS)
 ├── networking/              # Wireless monitoring tools
@@ -31,7 +32,8 @@ Archived shell scripts for system administration, media management, and developm
 ├── plex/                    # Plex media management
 │   ├── aviconverter.sh     # AVI→MP4 converter via VLC
 │   ├── checkdate.py        # File listing utility
-│   └── plex_fileswitch.sh  # Plex media sync (has merge conflict)
+│   ├── plex_fileswitch.env.example # Safe template for local SSH settings
+│   └── plex_fileswitch.sh  # Plex media sync (uses private local config)
 ├── README.md
 └── LICENSE
 ```
@@ -56,6 +58,12 @@ Archived shell scripts for system administration, media management, and developm
 
 ### System Maintenance
 
+**`fix-fingerprint-pam.sh`** — Backs up and configures PAM for fingerprint authentication.
+```bash
+sudo ./fix-fingerprint-pam.sh
+```
+> Creates timestamped backups before patching `/etc/pam.d/system-local-login` and `/etc/pam.d/sddm`. Review the script and verify password fallback after running it.
+
 **old_scripts/updater.sh** — System update wrapper.
 ```bash
 # ./old_scripts/updater.sh
@@ -71,11 +79,15 @@ Archived shell scripts for system administration, media management, and developm
 
 ### Plex Media Management
 
-**plex/plex_fileswitch.sh** — Syncs local media to Plex server.
+**`plex/plex_fileswitch.sh`** — Syncs one regular file to a Plex server over SSH with `rsync`.
 ```bash
-# ./plex/plex_fileswitch.sh /path/to/movie.mp4
+mkdir -p ~/.config/plex
+cp plex/plex_fileswitch.env.example ~/.config/plex/plex_fileswitch.env
+chmod 600 ~/.config/plex/plex_fileswitch.env
+$EDITOR ~/.config/plex/plex_fileswitch.env
+./plex/plex_fileswitch.sh /path/to/movie.mp4
 ```
-> Uses `rsync` over SSH.  Has an unresolved merge conflict in current HEAD.
+> Set `PLEX_DEST`, `PLEX_USER`, and `PLEX_HOST` in that private config file or the environment. Set `PLEX_FILESWITCH_CONFIG` to use a different config path. Never commit site-specific connection details.
 
 **plex/aviconverter.sh** — Batch video conversion.
 ```bash
@@ -166,11 +178,10 @@ Archived shell scripts for system administration, media management, and developm
 
 ---
 
-## Merge Conflicts & Incomplete Files
+## Known Incomplete Files
 
 | File | Issue |
 |------|-------|
-| `plex/plex_fileswitch.sh` | Contains unresolved Git merge conflict markers (`<<<<<<< HEAD`) |
 | `iso_dd.sh` | Incomplete logic—never actually calls `burnISO` function |
 | `networking/deauth.sh` | Runs `while true` loop indefinitely; requires manual Ctrl+C |
 | `administrative/user_audit/permis_check.sh` | Missing variable initialization; incomplete loop |
@@ -189,7 +200,7 @@ Archived shell scripts for system administration, media management, and developm
 ## Cleanup Recommendations
 
 - Remove `old_scripts/` if these tools are no longer needed
-- Fix or delete `plex/plex_fileswitch.sh` until merge conflict is resolved
+- Keep Plex SSH connection details in the private local config, not tracked files
 - Archive `administrative/user_audit/` logs older than 30 days
 - Consider rewriting `iso_dd.sh` with explicit `umask` and `blkid` validation
 
