@@ -129,7 +129,7 @@ packloadall
 "All of your Plugins must be added before the following line...
 call vundle#end()            " required
 filetype plugin indent on    " required
-nnoremap <silent> <F2> :NERDTreeToggle ~/<CR>
+nnoremap <silent> <F2> :execute 'NERDTreeToggle ' . fnameescape(expand('~'))<CR>
 
 let g:NERDTreeNodeDelimiter = "\u00a0"
 syntax on

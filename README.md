@@ -10,30 +10,34 @@ Archived shell scripts for system administration, media management, and developm
 
 ```
 .
-├── administrative/          # User audit and permission checks
-│   └── user_audit/          # Audit logs and scripts
-├── dotfiles/                # Personal configuration (alacritty, vim, fish)
-│   └── fish_config/         # Tide theme installer
-├── file_organizer/          # Automated file sorting by type
-├── fix-fingerprint-pam.sh   # Configure fingerprint authentication in PAM
-├── iso_dd.sh                # ISO image writing tool
-├── imgburn.sh               # USB burning via `dd` (DANGEROUS)
-├── networking/              # Wireless monitoring tools
-│   └── deauth.sh            # WiFi deauth/monitor mode
-├── old_scripts/             # Legacy system scripts
-│   ├── argcnt.sh           # Argument counter
-│   ├── bgrotate.sh         # Wallpaper rotator
-│   ├── extbackup.sh        # System backup to external drive
-│   ├── fldrmkr.sh          # Web dev folder creator (macOS)
-│   ├── installer.sh        # System restoration script
-│   ├── save.sh             # Quick web scraper
-│   ├── updater.sh          # `apt update/upgrade` wrapper
-│   └── vpnsw.sh            # Private Internet Access VPN switcher
-├── plex/                    # Plex media management
-│   ├── aviconverter.sh     # AVI→MP4 converter via VLC
-│   ├── checkdate.py        # File listing utility
-│   ├── plex_fileswitch.env.example # Safe template for local SSH settings
-│   └── plex_fileswitch.sh  # Plex media sync (uses private local config)
+├── .gitignore
+├── archive/
+│   └── unsafe/              # Retired, non-executable prototypes
+│       ├── README.md
+│       ├── deauth.sh
+│       ├── extbackup.sh
+│       ├── imgburn.sh
+│       ├── installer.sh
+│       ├── iso_dd.sh
+│       ├── organizer.sh
+│       └── permis_check.sh
+├── dotfiles/
+│   └── fish_config/
+│       └── tide_install.sh
+├── fix-fingerprint-pam.sh
+├── old_scripts/
+│   ├── argcnt.sh
+│   ├── bgrotate.sh
+│   ├── fldrmkr.sh
+│   ├── for.sh
+│   ├── save.sh
+│   ├── updater.sh
+│   └── vpnsw.sh
+├── plex/
+│   ├── aviconverter.sh
+│   ├── checkdate.py
+│   ├── plex_fileswitch.env.example
+│   └── plex_fileswitch.sh
 ├── README.md
 └── LICENSE
 ```
@@ -42,19 +46,9 @@ Archived shell scripts for system administration, media management, and developm
 
 ## Scripts by Category
 
-### ISO/USB Burning
+### Archived high-risk tools
 
-**iso_dd.sh** — Lists ISO files and writes to USB drives.
-```bash
-# ./iso_dd.sh /path/to/ISOs/  # Lists ISOs, then prompts for selection
-```
-> Uses `dd` with 4MB block size.  Double-check device paths to avoid data loss.
-
-**imgburn.sh** — Minimal ISO burner.
-```bash
-# ./imgburn.sh ubuntu.iso /dev/sdX
-```
-> DANGEROUS: Direct `dd` invocation without safety checks.  Use only for trusted media.
+Disk imaging, backup, installer, file-organizer, account-audit, and wireless deauthentication prototypes are retained under `archive/unsafe/` as non-executable reference files. Their current forms are incomplete or dangerous; see `archive/unsafe/README.md` and do not run them without review and repair.
 
 ### System Maintenance
 
@@ -69,13 +63,6 @@ sudo ./fix-fingerprint-pam.sh
 # ./old_scripts/updater.sh
 ```
 > Runs `sudo apt update upgrade autoclean autoremove` in a loop.
-
-**old_scripts/extbackup.sh** — Full system backup to external USB.
-```bash
-# ./old_scripts/extbackup.sh
-```
-> Archives `~` to `/mnt/media/$USER/backupdr/arch_backup/`.
-> Clears browser caches before backup.  Requires mounted external drive.
 
 ### Plex Media Management
 
@@ -101,35 +88,6 @@ $EDITOR ~/.config/plex/plex_fileswitch.env
 # ./plex/checkdate.py /mnt/Plex/Media/Movies
 ```
 > Simple Python script to count files in a Plex directory.
-
-### Networking
-
-**networking/deauth.sh** — WiFi monitoring and deauthentication.
-```bash
-# ./networking/deauth.sh
-```
-> Puts device in monitor mode, then enters interactive loop.
-> `deauthNet` function sends 100 deauth packets to a MAC address (runs 30×).
-> **Requires**: `aircrack-ng` suite and wireless interface (e.g., `wlan0`).
-
-### File Organization
-
-**file_organizer/organizer.sh** — Auto-sorts files by extension.
-```bash
-# ./file_organizer/organizer.sh /path/to/files/
-```
-> Moves old files (>30 days) to archive folders: `~/Archive/{Documents,Images,Scripts,etc}`.
-> Skips hidden files.  Creates destination directories if missing.
-> **Note**: Uses `stat -c "%Y"` (Linux) not `stat -f` (macOS).  macOS users need adjustment.
-
-### User Administration
-
-**administrative/user_audit/permis_check.sh** — System user audit.
-```bash
-# sudo ./administrative/user_audit/permis_check.sh
-```
-> Checks for active vs. inactive accounts, logs last login times.
-> **Incomplete**: Missing variable declarations (`ACTIVE_USERS`, `INACTIVE_USERS` arrays never initialized).  Does not output full report.
 
 ### Quick Utilities
 
@@ -160,14 +118,6 @@ $EDITOR ~/.config/plex/plex_fileswitch.env
 > macOS-only: Creates project folder with `index.html` and `resources/css/index.css`.
 > Linux users will fail at `/Users/$USER/Dropbox/...` paths.
 
-**old_scripts/installer.sh** — Legacy system setup.
-```bash
-# ./old_scripts/installer.sh
-```
-> Installs specific tools: Vundle.vim, GNOME helpers, Kismet, cursor pointer toggle.
-> Reads from `~/Documents/packages/installfiles.txt` for deb packages.
-> **Deprecated**: Prefer package manager scripts for reproducibility.
-
 ### Dotfiles
 
 **dotfiles/fish_config/tide_install.sh** — Tide theme installer for Fish shell.
@@ -178,31 +128,20 @@ $EDITOR ~/.config/plex/plex_fileswitch.env
 
 ---
 
-## Known Incomplete Files
-
-| File | Issue |
-|------|-------|
-| `iso_dd.sh` | Incomplete logic—never actually calls `burnISO` function |
-| `networking/deauth.sh` | Runs `while true` loop indefinitely; requires manual Ctrl+C |
-| `administrative/user_audit/permis_check.sh` | Missing variable initialization; incomplete loop |
-
----
-
 ## Safety Notes
 
-1. **`imgburn.sh` and `iso_dd.sh`** both use `dd` without safety checks.  Always verify `/dev/sdX` is your target drive.
-2. **`networking/deauth.sh`** can interfere with neighboring WiFi networks.  Use responsibly.
-3. **`file_organizer/organizer.sh`** moves files without confirmation—review the logic before running on critical data.
-4. **`old_scripts/installer.sh`** assumes specific paths and dependencies; test on a VM first.
+1. Scripts in `archive/unsafe/` are non-executable but remain dangerous if invoked manually; review and repair before use.
+2. `fix-fingerprint-pam.sh` changes PAM configuration. It creates timestamped backups; verify password fallback after running it.
+3. `plex/plex_fileswitch.sh` sources a local configuration file. Keep that file owner-readable only and never store it in Git.
+4. The remaining `old_scripts/` tools are legacy and may assume obsolete platforms or paths.
 
 ---
 
 ## Cleanup Recommendations
 
-- Remove `old_scripts/` if these tools are no longer needed
-- Keep Plex SSH connection details in the private local config, not tracked files
-- Archive `administrative/user_audit/` logs older than 30 days
-- Consider rewriting `iso_dd.sh` with explicit `umask` and `blkid` validation
+- Review archived scripts before promoting or running them
+- Add syntax, lint, and dry-run tests before reactivating any archived tool
+- Keep machine-specific configuration and generated output outside Git
 
 ---
 

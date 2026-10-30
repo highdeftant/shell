@@ -1,0 +1,5 @@
+# Runtime output can contain local account or system information.
+*.log
+
+# Private Plex connection settings belong outside the repository.
+plex/plex_fileswitch.env
