@@ -25,7 +25,7 @@ Archived shell scripts for system administration, media management, and developm
 │   └── fish_config/
 │       └── tide_install.sh
 ├── fix-fingerprint-pam.sh
-├── old_scripts/
+├── old_scripts/             # Legacy/unsupported examples; reference only
 │   ├── argcnt.sh
 │   ├── bgrotate.sh
 │   ├── fldrmkr.sh
@@ -58,11 +58,7 @@ sudo ./fix-fingerprint-pam.sh
 ```
 > Creates timestamped backups before patching `/etc/pam.d/system-local-login` and `/etc/pam.d/sddm`. Review the script and verify password fallback after running it.
 
-**old_scripts/updater.sh** — System update wrapper.
-```bash
-# ./old_scripts/updater.sh
-```
-> Runs `sudo apt update upgrade autoclean autoremove` in a loop.
+**`old_scripts/updater.sh`** — Legacy, unsupported update wrapper retained for reference. Its package-manager assumptions may not match this system; do not run without reviewing it first.
 
 ### Plex Media Management
 
@@ -89,7 +85,9 @@ $EDITOR ~/.config/plex/plex_fileswitch.env
 ```
 > Simple Python script to count files in a Plex directory.
 
-### Quick Utilities
+### Legacy Utilities (unsupported)
+
+The following `old_scripts/` examples are not maintained or safety-reviewed. They may fail on modern systems or assume obsolete platform-specific paths; treat them as historical references, not supported tools.
 
 **old_scripts/argcnt.sh** — Counts and displays arguments.
 ```bash
